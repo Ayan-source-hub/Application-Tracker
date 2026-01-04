@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SCT — Plan</title>
+  <link rel="icon" href="assets/question.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <button class="mobile-sidebar-close" aria-label="Close menu">✕</button>
+          <div class="logo">
+            <img src="assets/question.svg" alt="Career Tracker" class="logo-mark-img" />
+            <div class="logo-text">Career Tracker</div>
+          </div>
+        <nav class="nav">
+          <a class="nav-item" href="index.html">Dashboard</a>
+          <a class="nav-item" href="applications.html">Applications</a>
+        </nav>
+
+        <button class="btn new-plan-sidebar">+ New Job Plan</button>
+
+        <div class="active-plans">
+          <div class="active-title">ACTIVE PLANS</div>
+          <div id="activePlansList" class="active-plans-list"></div>
+        </div>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="counts">
+          <div>0 active plans</div>
+          <div>0 completed</div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main" id="mainContent">
+      <button class="mobile-menu-btn" aria-label="Open menu">☰</button>
+      <!-- Plan content will be rendered by plan.js -->
+    </main>
+  </div>
+
+  <!-- include create plan modal so New Job Plan works on plan pages -->
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-panel form-modal">
+      <button class="modal-close" id="modalClose">✕</button>
+      <h3>Create New Job Plan</h3>
+
+      <form id="planForm">
+        <div class="form-row">
+          <label>Company Name *
+            <input id="company" name="company" type="text" placeholder="e.g., Google, Microsoft" required />
+          </label>
+          <label>Role / Position *
+            <input id="role" name="role" type="text" placeholder="e.g., Senior Frontend Developer" required />
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label>Timeline *
+            <input id="timeline" name="timeline" type="text" placeholder="e.g., 3 months" required />
+          </label>
+          <label>Start Date
+            <input id="startDate" name="startDate" type="date" />
+          </label>
+          <label>Target Date
+            <input id="targetDate" name="targetDate" type="date" />
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>Learning Roadmap (Skills/Technologies) *</label>
+          <div class="roadmap-container">
+            <input id="roadmap" name="roadmap" type="text" placeholder="e.g., React.js, Python, Data Structures" required />
+            <button type="button" class="btn roadmap-sub-btn" id="roadmapSubBtn">Add Sub-step</button>
+          </div>
+        </div>
+
+        <div class="form-group steps-area">
+          <div class="steps-header">
+            <button type="button" class="btn add-step-pill" id="addStepBtn">+ Add Step</button>
+          </div>
+          <div id="stepsList" class="steps-list">
+            <!-- dynamic steps go here -->
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary">Create Job Plan</button>
+          <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="plan.js"></script>
+</body>
+</html>

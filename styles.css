@@ -1,0 +1,540 @@
+:root{
+  --bg:#f6f7fb;
+  --sidebar:#0f1724; /* dark navy */
+  --muted:#8a92a6;
+  --card:#ffffff;
+  --purple:#6b46ff;
+  --purple-600:#5b3df0;
+}
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:#111827;
+}
+.app{display:flex;min-height:100vh}
+.sidebar{width:260px;background:var(--sidebar);color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:28px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:40px;height:40px;border-radius:10px;background:linear-gradient(180deg,#1f2a44,#0f1724);display:flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,0.04)}
+.logo-mark-img{width:36px;height:36px;border-radius:8px}
+.logo-text{font-weight:600;font-size:18px}
+
+/* Active plans list in sidebar */
+.active-plans{margin-top:18px}
+.active-title{font-size:12px;color:#93a0b8;margin-bottom:8px}
+.active-plans-list{display:flex;flex-direction:column;gap:8px}
+.active-plan-item{display:block;padding:10px;border-radius:8px;background:transparent;color:#cbd5e1;text-decoration:none}
+.active-plan-item .plan-title{font-weight:600;color:#e6eefc}
+.active-plan-item .plan-company{font-size:12px;color:#94a3b8}
+.active-plan-item:hover{background:#141927}
+
+.nav{margin-top:18px;display:flex;flex-direction:column;gap:8px}
+.nav-item{color:#cbd5e1;text-decoration:none;padding:12px;border-radius:8px;display:flex;align-items:center;gap:10px}
+.nav-item .nav-icon{opacity:0.9;margin-right:6px}
+.nav-item.active{background:#11182744;color:#fff}
+.sidebar-bottom{margin-top:24px}
+.counts{font-size:12px;opacity:.8;margin-top:18px;color:#9aa3b8}
+
+/* new plan button in sidebar */
+.new-plan-sidebar{display:block;width:100%;text-align:left;padding:12px 16px;background:linear-gradient(180deg,var(--purple),var(--purple-600));border-radius:12px;color:#fff;font-weight:700;margin-top:12px}
+
+/* active plan list */
+.active-plans-list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.active-plan-item{display:block;padding:12px;border-radius:10px;background:#0b1a2a;color:#dbeafe;text-decoration:none}
+.active-plan-item .plan-title{font-weight:700;color:#e6eefc}
+.active-plan-item .plan-company{font-size:12px;color:#9aa3b8}
+.active-plan-item:hover{background:#0f2638}
+
+/* back link */
+.back-link{color:#334155;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:8px}
+.back-link:hover{color:#111827}
+
+/* mobile menu button (hidden on desktop) */
+.mobile-menu-btn{display:none;position:relative;border:0;background:#0f1724;color:#fff;padding:8px 10px;border-radius:8px;margin-right:12px;font-size:20px}
+.mobile-sidebar-close{display:none;position:absolute;right:14px;top:12px;border:0;background:transparent;color:#fff;font-size:20px}
+
+/* mobile overlay */
+#mobileOverlay{position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(2,6,23,0.45);z-index:1000;display:none}
+#mobileOverlay.visible{display:block}
+
+.main{flex:1;padding:36px 48px}
+.main-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+h1{margin:0;font-size:28px}
+.subtitle{margin:4px 0 0;color:var(--muted)}
+
+.btn{cursor:pointer;border:0;padding:10px 16px;border-radius:10px;font-weight:600}
+.btn-primary{background:linear-gradient(180deg,var(--purple),var(--purple-600));color:#fff;box-shadow:0 6px 18px rgba(107,70,255,0.18)}
+.btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.04);padding:10px 14px}
+.btn-secondary{background:#eef2ff;color:var(--purple);}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px}
+.card{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 6px 20px rgba(16,24,40,0.04)}
+.stat{display:flex;align-items:center;gap:12px}
+.stat-icon{width:52px;height:52px;background:#f0f6ff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.stat-body{display:flex;flex-direction:column}
+.stat-label{font-size:13px;color:var(--muted)}
+.stat-value{font-size:20px;font-weight:700}
+
+.large-card{padding:56px;display:flex;align-items:center;justify-content:center;min-height:260px}
+.empty-inner{text-align:center;color:var(--muted)}
+.empty-illustration{font-size:48px;color:#dbeafe;margin-bottom:12px}
+.empty-inner h2{margin:0;color:#111827}
+.empty-inner p{margin-top:8px;margin-bottom:18px}
+
+.modal{position:fixed;inset:0;background:rgba(2,6,23,0.45);display:flex;align-items:center;justify-content:center}
+.modal.hidden{display:none}
+.modal-panel{background:var(--card);padding:24px;border-radius:12px;min-width:320px;box-shadow:0 8px 40px rgba(2,6,23,0.2)}
+.modal-actions{display:flex;justify-content:flex-end;margin-top:12px;gap:8px}
+
+@media (max-width:900px){
+  /* transform sidebar into off-canvas drawer on small screens */
+  .sidebar{display:flex;position:fixed;left:-320px;top:0;height:100vh;width:280px;padding:28px;transition:left .25s ease;background:var(--sidebar);z-index:1001}
+  .sidebar.open{left:0}
+  /* overlay will be inserted at runtime */
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .main{padding:18px}
+  .mobile-menu-btn{display:inline-block}
+  .mobile-sidebar-close{display:inline-block}
+  /* header stacks on small screens */
+  .main-header{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+  .main-header .btn.btn-primary.new-plan{width:100%;padding:14px;border-radius:12px}
+}
+
+/* tighter mobile rules for small phones */
+@media (max-width:420px){
+  body{font-size:15px}
+  .main{padding:16px}
+  .card{padding:14px;border-radius:12px}
+  .stats{grid-template-columns:repeat(2,1fr);gap:12px}
+  .stat{padding:12px}
+  .stat-icon{width:44px;height:44px}
+  .large-card{padding:28px}
+  #plansSection h3{font-size:16px}
+  #plansContainer{grid-template-columns:1fr}
+  .plan-card{padding:12px}
+  .plan-card .progress{height:8px}
+
+  /* modal becomes full-screen panel on mobile */
+  .modal-panel{width:100%;max-width:100%;height:calc(100vh - 40px);margin:20px auto 0;border-radius:14px;overflow:auto;padding:18px}
+  .modal-close{right:14px;top:14px}
+
+  /* Form rows should stack on small screens */
+  .form-row{flex-direction:column;gap:12px}
+  .form-row label{flex-direction:column}
+  .form-row label input, .form-row label select, .form-row label textarea{width:100%}
+  .form-group .roadmap-container{flex-direction:column;align-items:stretch}
+  .roadmap-container input{width:100%;margin:0}
+  .roadmap-sub-btn{width:100%;margin-top:10px;padding:10px}
+  .add-step-pill{width:100%;display:block}
+
+  /* step card controls stack */
+  .step-row{flex-direction:column;align-items:stretch}
+  .step-row input{width:100%;margin-bottom:8px}
+  .substeps .substep-input{width:100%}
+
+  /* modal inputs and buttons full width */
+  .modal-panel input[type="text"], .modal-panel input[type="date"], .modal-panel textarea{width:100%;box-sizing:border-box}
+  .modal-actions .btn{width:100%;padding:12px}
+  .modal-actions .btn + .btn{margin-top:8px}
+
+  /* roadmap and project panels spacing */
+  /* Plan detail / header adjustments for mobile */
+  .plan-header{flex-direction:column;align-items:flex-start;gap:12px}
+  .plan-header .meta{width:100%;display:flex;flex-direction:row;gap:12px;flex-wrap:wrap}
+  .plan-header .meta .meta-item{flex:1 1 120px}
+  .plan-header .actions{width:100%;display:flex;flex-direction:column;gap:10px}
+  .plan-header .actions .btn{width:100%;padding:10px}
+
+  /* Tabs full width and sticky top spacing */
+  .tabs{width:100%}
+  .tabs nav{display:flex;gap:8px;overflow:auto;padding:6px 2px}
+  .tabs nav a{padding:8px 12px;white-space:nowrap}
+
+  /* Applications section responsive tweaks */
+  .applications-overview{display:flex;flex-direction:column;gap:10px}
+  .applications-overview .stats{display:flex;gap:12px;flex-wrap:wrap}
+  .log-application-btn{width:100%;align-self:flex-start}
+
+  .applications-list .app-card{padding:12px;border-radius:12px;margin-bottom:14px}
+  .app-card .app-meta{display:flex;flex-direction:column;gap:8px}
+  .app-card .status-badges{display:flex;gap:8px;flex-wrap:wrap}
+  .app-card .status-badges .status-btn{padding:8px 10px}
+  .app-card .delete-btn{align-self:flex-end}
+
+  /* Date fields and meta items clearer on mobile */
+  .meta-item{display:flex;align-items:center;gap:8px}
+  .meta-item .meta-label{font-size:13px;color:#667085}
+  .meta-item .meta-value{font-weight:600;color:#0f172a}
+  .meta-item .date-icon{width:18px;height:18px;opacity:0.7}
+
+  /* Application status badges colors and sizing */
+  .applications-overview .stats .stat-applied{color:#6b21a8;font-weight:700}
+  .applications-overview .stats .stat-interview{color:#7c3aed;font-weight:700}
+  .applications-overview .stats .stat-offer{color:#059669;font-weight:700}
+  .applications-overview .stats .stat-rejected{color:#ef4444;font-weight:700}
+
+  /* Prominent Log Application button */
+  .log-application-btn{background:linear-gradient(90deg,#7c3aed,#6d28d9);color:#fff;border:none;border-radius:12px;padding:12px 18px;box-shadow:0 6px 18px rgba(109,40,217,0.18);font-weight:700}
+
+  /* App-card badge visual styles */
+  .status-badges .status-btn{background:#f1f5f9;color:#0f172a;border-radius:999px;padding:6px 10px;font-size:13px;box-shadow:none}
+  .status-badges .status-applied{background:#eef2ff;color:#4f46e5}
+  .status-badges .status-interview{background:#f0f9ff;color:#3730a3}
+  .status-badges .status-offer{background:#ecfdf5;color:#065f46}
+  .status-badges .status-rejected{background:#fff1f2;color:#b91c1c}
+
+  /* Ensure calendar / applied-date line is visible */
+  .app-card .applied-date{display:flex;align-items:center;gap:8px;color:#64748b;font-size:13px}
+  .app-card .applied-date .cal-icon{width:16px;height:16px;opacity:0.7}
+
+  /* Layout the four summary stats as clear stat blocks */
+  .applications-header{display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .applications-overview .stats{display:flex;gap:18px;align-items:center}
+  .applications-overview .stats .stat{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+  .applications-overview .stats .stat .count{font-weight:800;font-size:18px}
+  .applications-overview .stats .stat .label{font-size:13px;color:#6b7280}
+  .applications-overview .stats .stat.stat-applied .count{color:#6b21a8}
+  .applications-overview .stats .stat.stat-interview .count{color:#7c3aed}
+  .applications-overview .stats .stat.stat-offer .count{color:#059669}
+  .applications-overview .stats .stat.stat-rejected .count{color:#ef4444}
+
+  /* Position Log Application button on the right for larger narrow screens */
+  .log-application-container{display:flex;align-items:center}
+  .log-application-container .log-application-btn{min-width:160px}
+
+  /* Small viewport overrides (ensure stacked, full-width) */
+  @media (max-width:420px){
+    .applications-header{flex-direction:column;align-items:stretch}
+    .applications-overview .stats{justify-content:flex-start;gap:12px;margin-bottom:8px}
+    .log-application-container{width:100%;display:flex}
+    .log-application-container .log-application-btn{flex:1;width:100%}
+  }
+
+  /* Desktop / tablet: stats column on left, log button on right */
+  @media (min-width:421px){
+    .applications-header{flex-direction:row;align-items:center}
+    .applications-overview .stats{flex-direction:column;align-items:flex-start;gap:6px}
+    .applications-overview .stats .stat{align-items:flex-start}
+    .log-application-container{margin-left:auto}
+    .log-application-container .log-application-btn{padding:10px 18px;border-radius:12px}
+  }
+
+  /* Professional tweaks: spacing, subtle dividers */
+  .applications-overview{background:transparent;padding:10px 0}
+  .applications-overview .stats .stat{padding:6px 0}
+  .applications-overview .stats .stat + .stat{border-top:1px solid rgba(15,23,42,0.03);padding-top:10px}
+
+  /* make stat blocks clickable-looking */
+  .applications-overview .stats .stat{cursor:default}
+
+  /* compact spacing for small viewport */
+  .plan-card, .large-card, .panel{padding:12px}
+  .back-link{font-size:14px}
+  .roadmap-row{padding:10px}
+  .projects-panel{padding:10px}
+
+  /* tabs full width and scrollable */
+  .tabs{overflow-x:auto;width:100%;gap:8px}
+  .tab{flex:0 0 auto;padding:10px 8px}
+
+  /* buttons full width inside cards */
+  .projects-panel .add-project-pill, .project-form .proj-add, .btn.btn-primary{width:100%}
+
+  /* inputs full width */
+  input[type="text"], input[type="date"], textarea{width:100%;box-sizing:border-box}
+
+  /* application & worklog card spacing */
+  .app-card, .worklog-entry{padding:12px}
+
+  /* mobile menu button placement: ensure visible */
+  .mobile-menu-btn{position:fixed;left:12px;top:12px;z-index:1100}
+  .mobile-sidebar-close{right:12px;top:12px}
+  #mobileOverlay{z-index:1000}
+}
+
+/* Applications header & log button precise layout */
+.applications-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.applications-header .applications-stats{display:flex;gap:12px;align-items:center}
+.applications-header .stat{display:inline-flex;gap:6px;align-items:center;font-size:13px}
+.applications-header .stat .count{font-weight:800;font-size:14px}
+.applications-header .stat .label{color:#64748b;font-weight:600}
+.applications-header .stat-applied .count{color:#6b21a8}
+.applications-header .stat-interview .count{color:#7c3aed}
+.applications-header .stat-offer .count{color:#059669}
+.applications-header .stat-rejected .count{color:#ef4444}
+.log-application-container{margin-left:auto}
+.log-application-btn{background:linear-gradient(90deg,#6b46ff,#5b3df0);color:#fff;border:none;border-radius:12px;padding:10px 16px;box-shadow:0 10px 30px rgba(107,70,255,0.18);font-weight:800}
+
+/* Mobile: counts line above and full-width Log Application button centered below (matches second image) */
+@media (max-width:520px){
+  .applications-header{flex-direction:column;align-items:flex-start}
+  .applications-header .applications-stats{width:100%;display:flex;flex-wrap:wrap;gap:8px}
+  .log-application-container{width:100%;margin-left:0}
+  .log-application-btn{width:100%;display:block;border-radius:12px;padding:12px 18px;text-align:center;font-size:15px}
+}
+
+/* Tweak spacing for very small screens */
+@media (max-width:420px){
+  .applications-header .stat .count{font-size:13px}
+  .applications-header .stat .label{font-size:12px}
+}
+
+/* Form modal styles */
+.form-modal{position:relative;max-width:920px;width:calc(100% - 64px);}
+.form-modal h3{margin:0 0 14px;font-size:18px}
+.modal-close{position:absolute;right:18px;top:18px;border:0;background:transparent;font-size:18px;cursor:pointer;color:var(--muted)}
+.form-row{display:flex;gap:16px;margin-bottom:12px}
+.form-row label{flex:1;display:flex;flex-direction:column;font-size:13px;color:var(--muted)}
+.form-group{margin-bottom:12px}
+input[type="text"], input[type="date"]{padding:12px;border-radius:10px;border:1px solid #e6e9f2;background:#fff;font-size:14px;color:#111827}
+input::placeholder{color:#9aa3b8}
+.steps-area{background:#f8fafc;padding:14px;border-radius:10px}
+.steps-header{display:flex;justify-content:flex-start;margin-bottom:8px}
+.steps-list{display:flex;flex-direction:column;gap:10px}
+.step-card{background:#fff;padding:10px;border-radius:8px;border:1px solid #edf1f7;display:flex;flex-direction:column;gap:8px}
+.step-row{display:flex;gap:8px;align-items:center}
+.step-row input{flex:1}
+.substeps{display:flex;flex-direction:column;gap:6px;padding-left:10px}
+.substep-input{padding:8px;border-radius:8px;border:1px solid #eef2f8}
+.substep-actions{display:flex;gap:8px}
+.step-controls{display:flex;gap:8px}
+
+.btn-ghost{background:#eef2ff;color:var(--purple);}
+
+/* roadmap container */
+.roadmap-container{display:flex;align-items:center;gap:12px;background:#f1f5f9;padding:12px;border-radius:12px;border:1px solid #eef3fb}
+.roadmap-container input{border:0;background:transparent;padding:10px;font-size:14px;flex:1}
+.roadmap-sub-btn{background:#e9e6ff;color:var(--purple);border-radius:10px;padding:8px 12px}
+
+/* Roadmap list & step rows (plan detail) */
+.roadmap-list{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.roadmap-card{background:var(--card);border-radius:12px;padding:8px;border:1px solid #eef3fb}
+.roadmap-step{display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:#fff;border:1px solid rgba(14,30,50,0.03)}
+.roadmap-step .chev{width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:14px}
+.roadmap-step .step-check{width:18px;height:18px;border:1px solid #e6eef7;border-radius:6px;background:#fff;display:flex;align-items:center;justify-content:center}
+.roadmap-step .step-label{flex:1;font-weight:600;color:#0f172a;font-size:15px}
+.roadmap-step .projects-btn{background:linear-gradient(180deg,#6b46ff,#5b3df0);color:#fff;border:0;padding:8px 12px;border-radius:10px;font-weight:700;display:inline-flex;align-items:center;gap:8px}
+.roadmap-step .projects-btn .proj-icon{width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.12);border-radius:6px}
+
+/* hover / active affordances */
+.roadmap-step:hover{box-shadow:0 6px 18px rgba(16,24,40,0.04)}
+.roadmap-step .step-check input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:100%;height:100%;margin:0;display:block}
+.roadmap-step .step-check input[type="checkbox"]:checked{background:linear-gradient(90deg,#c7b8ff,#8b5cf6);border-color:transparent}
+
+@media (max-width:420px){
+  .roadmap-step{padding:12px;border-radius:12px}
+  .roadmap-step .projects-btn{min-width:96px;padding:10px 12px}
+}
+
+/* Tweak roadmap rows to match existing markup (.roadmap-row used in plan.js) */
+.roadmap-row{background:#fff;border:1px solid #eef3fb;border-radius:10px;margin-bottom:10px;box-shadow:0 6px 18px rgba(16,24,40,0.03);display:flex;justify-content:space-between;align-items:center;padding:12px 12px !important}
+.roadmap-row{ /* override inline border-bottom */ border-bottom:none !important }
+.roadmap-row > div:first-child{display:flex;align-items:center;gap:10px;flex:1}
+.roadmap-row > div:first-child button{width:22px;height:22px;border-radius:6px;background:transparent;border:0;color:#94a3b8;font-size:14px;display:flex;align-items:center;justify-content:center;padding:0}
+.roadmap-row > div:first-child input[type="checkbox"]{width:18px;height:18px;border:1px solid #e6eef7;border-radius:6px;background:#fff;appearance:none;-webkit-appearance:none;margin-left:8px;flex:0 0 auto}
+.roadmap-row > div:first-child input[type="checkbox"]:checked{background:linear-gradient(90deg,#c7b8ff,#8b5cf6);border-color:transparent}
+.roadmap-row > div:first-child div{margin-left:10px;font-weight:600;color:#0f172a}
+.roadmap-row > div:last-child{display:flex;align-items:center;gap:8px}
+.roadmap-row .btn.btn-primary{background:linear-gradient(180deg,#6b46ff,#5b3df0) !important;color:#fff !important;border-radius:12px;padding:10px 14px;font-weight:700;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 22px rgba(107,70,255,0.18)}
+.roadmap-row .btn.btn-primary::before{content:'';display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;margin-right:6px;background:rgba(255,255,255,0.12);border-radius:6px}
+
+/* Learning Roadmap title icon to match screenshot */
+#tabContent h4{position:relative;padding-left:34px;font-weight:600;color:#0f172a;margin:0 0 12px}
+#tabContent h4::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:18px;height:18px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'><path d='M3 7a2 2 0 012-2h3l2 2h7a2 2 0 012 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2V7z' stroke='%236b46ff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>");background-size:contain;background-repeat:no-repeat}
+
+@media (max-width:420px){
+  .roadmap-row{padding:12px}
+  .roadmap-row > div:first-child div{font-size:15px}
+}
+
+/* add step pill */
+.add-step-pill{background:#eef3f9;color:#111827;border-radius:12px;padding:10px 16px;font-weight:600}
+
+/* project panel styles */
+.projects-panel{border-radius:10px}
+.add-project-pill{background:linear-gradient(180deg,var(--purple),var(--purple-600));color:#fff;border-radius:8px;padding:8px 12px}
+.project-card{border:1px solid #eef2f7;padding:12px;border-radius:8px}
+.project-form input{padding:10px;border-radius:8px;border:1px solid #e6edf7}
+.project-form .proj-add{border-radius:8px}
+.project-form .proj-cancel{border-radius:8px}
+
+/* dashboard plan card */
+.plan-card{min-height:140px;display:block;text-decoration:none;color:inherit;background:var(--card);border-radius:12px;padding:14px;border:1px solid #eef3fb;box-shadow:0 6px 18px rgba(15,23,42,0.04)}
+/* plan header inside plan-card */
+.plan-card .plan-header{display:flex;flex-direction:column;gap:8px}
+.plan-card .plan-header h2{margin:0;font-size:20px;font-weight:800;color:#0f172a}
+.plan-card .plan-header .subtitle{margin:0;color:#64748b}
+.plan-card .meta{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.plan-card .meta .meta-item{display:flex;align-items:center;gap:8px;color:#64748b;font-size:14px}
+.plan-card .meta .meta-item .meta-icon, .plan-card .meta .meta-item svg{width:18px;height:18px;opacity:0.85}
+.plan-card .meta .meta-item span{margin-left:6px;color:#64748b}
+.plan-card .progress-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.plan-card .progress-label{font-size:13px;color:#475569}
+.plan-card .progress-bar{height:8px;border-radius:8px;margin-top:6px}
+
+/* action buttons inside plan card (stacked full width) */
+.plan-card .actions{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.plan-card .actions .btn{
+  width:100%;
+  border-radius:10px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:44px;
+  padding:0 18px;
+  border:0;
+  position:relative;
+  overflow:visible;
+}
+.plan-card .actions .btn.mark-complete{background:#10b981;color:#fff;box-shadow:0 6px 12px rgba(16,185,129,0.12)}
+.plan-card .actions .btn.delete{background:#ef4444;color:#fff;box-shadow:0 6px 12px rgba(239,68,68,0.12)}
+.plan-card .actions .btn .btn-icon{position:absolute;left:14px;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.12);font-size:12px;color:#fff;border:1px solid rgba(255,255,255,0.18)}
+.plan-card .actions .btn .btn-label{font-weight:700;font-size:15px;display:block;text-align:center;width:100%}
+
+/* ensure icons in meta are sized nicely */
+.plan-card .meta .meta-icon{width:18px;height:18px;opacity:0.8}
+
+/* Title row: keep title left and active badge to the right on same line */
+.plan-card .title-row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.plan-card .title-row .badge{margin-left:0}
+
+/* Progress bar inner fill */
+.plan-card .progress{background:#eef2f8;border-radius:8px;overflow:hidden;width:100%;height:10px}
+.plan-card .progress .fill{height:100%;background:linear-gradient(90deg,#c7b8ff,#8b5cf6);width:0%;transition:width .4s ease}
+.plan-card .progress-percent{font-size:13px;color:#475569;margin-left:10px;white-space:nowrap}
+
+/* Slightly larger icons for timeline/calendar */
+.plan-card .meta .meta-icon{width:16px;height:16px}
+
+/* Make sure action buttons have icons spaced */
+.plan-card .actions .btn i{margin-right:8px}
+
+/* Small tweak: ensure card uses consistent font smoothing */
+.plan-card{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale }
+.plan-card .empty-inner h2{margin:0}
+
+/* badges and meta icons */
+.badge{display:inline-block;padding:6px 10px;border-radius:18px;background:#d1fae5;color:#065f46;font-weight:600;font-size:13px;margin-left:8px}
+.badge.completed{background:#eef2ff;color:#6b46ff}
+.meta-icon{display:inline-block;width:18px;height:18px;margin-right:8px;vertical-align:middle;opacity:0.8}
+
+.tabs{display:flex;gap:18px}
+.tab{background:transparent;border:0;padding:12px 6px;font-size:16px;color:#64748b;cursor:pointer}
+.tab.active{border-bottom:3px solid var(--purple);color:var(--purple);}
+
+/* Workflow entry card */
+.worklog-area{margin-top:12px}
+.worklog-entry{background:#fff;border-radius:12px;padding:14px;border:1px solid #eef3fb;margin-bottom:16px;box-shadow:0 6px 18px rgba(16,24,40,0.03)}
+.worklog-entry .entry-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.worklog-entry .entry-left{display:flex;flex-direction:column;gap:8px}
+.worklog-entry .entry-date{color:#64748b;display:flex;align-items:center;gap:8px}
+.worklog-entry .entry-hours{color:#64748b;display:flex;align-items:center;gap:8px}
+.worklog-entry .cal-icon{width:16px;height:16px;display:inline-block;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'><rect x='3' y='5' width='18' height='16' rx='2' stroke='%2394a3b8' stroke-width='1.2' fill='%23fff'/><path d='M16 3v4M8 3v4' stroke='%2394a3b8' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/></svg>");background-size:contain;background-repeat:no-repeat}
+.worklog-entry .time-icon{width:16px;height:16px;display:inline-block;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'><path d='M12 7v6l4 2' stroke='%2394a3b8' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/><circle cx='12' cy='12' r='9' stroke='%2394a3b8' stroke-width='1.2' fill='%23fff'/></svg>");background-size:contain;background-repeat:no-repeat}
+.worklog-entry .entry-actions .wl-delete{background:transparent;border:0;color:#ef4444;font-size:18px}
+.worklog-entry .entry-body{margin-top:12px;color:#475569}
+.worklog-entry .entry-tasks{margin-top:12px;color:#475569;display:flex;align-items:center;gap:8px}
+.task-badge{margin-left:8px}
+.task-yes{background:#ecfdf5;color:#059669;padding:6px 10px;border-radius:10px;font-weight:700}
+.task-no{background:#fff1f2;color:#b91c1c;padding:6px 10px;border-radius:10px;font-weight:700}
+.worklog-form{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.worklog-form .worklog-form-row{display:flex;gap:10px;flex-wrap:wrap}
+.worklog-form input, .worklog-form textarea{padding:10px;border-radius:8px;border:1px solid #e6edf7}
+.worklog-form .wl-add{background:#10b981;color:#fff;border-radius:8px;padding:8px 12px}
+.worklog-form .wl-cancel{background:#e6eefc;border-radius:8px;padding:8px 12px}
+
+/* Workflow header and log button */
+.workflow-header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.workflow-summary{color:#64748b}
+.workflow-summary .total-hours{color:var(--purple);font-weight:800}
+.workflow-actions{margin-left:auto}
+.log-work-btn{background:linear-gradient(90deg,#6b46ff,#5b3df0);color:#fff;border:none;border-radius:12px;padding:10px 16px;box-shadow:0 10px 30px rgba(107,70,255,0.18);font-weight:800}
+
+@media (max-width:520px){
+  .workflow-header{flex-direction:column;align-items:flex-start}
+  .workflow-actions{width:100%;margin-left:0}
+  .log-work-btn{width:100%;display:block;padding:12px 16px}
+}
+
+/* Applications */
+.app-card{padding:18px;border-radius:12px;border:1px solid #eef3fb;background:#fff;position:relative;box-shadow:0 6px 18px rgba(16,24,40,0.03);margin-bottom:16px}
+.app-card .company-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.app-card .company-left{display:flex;flex-direction:column;gap:6px}
+.app-card .company-name{font-weight:700;color:#0f172a}
+.app-card .company-sub{color:#6b7280;font-size:13px}
+.app-card .meta-line{display:flex;align-items:center;gap:8px;color:#94a3b8;font-size:13px;margin-top:6px}
+.app-card .meta-line .cal-icon{width:16px;height:16px;display:inline-block;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'><rect x='3' y='5' width='18' height='16' rx='2' stroke='%2394a3b8' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round' fill='%23fff'/><path d='M16 3v4M8 3v4' stroke='%2394a3b8' stroke-width='1.2' stroke-linecap='round'/></svg>");background-size:contain;background-repeat:no-repeat}
+.status-badge{display:inline-block;background:#eef2ff;color:var(--purple);padding:6px 10px;border-radius:8px;font-size:13px;margin-left:8px}
+.status-pills{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.status-pills .status-btn{background:#f1f5f9;border-radius:12px;padding:6px 10px;margin:4px 0;border:0;font-weight:700;color:#475569;font-size:13px;box-shadow:none}
+.status-pills .status-applied{background:#eef2ff;color:#6b46ff}
+.status-pills .status-interview{background:#f8fafc;color:#374151}
+.status-pills .status-offer{background:#ecfdf5;color:#065f46}
+.status-pills .status-rejected{background:#fff1f2;color:#b91c1c}
+.app-card .app-delete{cursor:pointer;background:transparent;border:0;color:#ef4444;font-size:18px}
+
+/* Log Application button prominent */
+.log-application-btn{background:linear-gradient(90deg,#7c3aed,#6d28d9);color:#fff;border:none;border-radius:14px;padding:12px 18px;box-shadow:0 10px 30px rgba(109,40,217,0.18);font-weight:800}
+
+/* Small notes area */
+.app-card .notes{margin-top:12px;color:#475569}
+
+/* small utilities */
+.card .btn{font-size:14px}
+.worklog-entry button, .app-card button{cursor:pointer}
+
+
+
+
+/* === Additional mobile polish for Plan Detail / Applications page === */
+@media (max-width:480px){
+  /* Header */
+  .plan-header{display:flex;flex-direction:column;gap:10px;padding:12px 8px}
+  .plan-header h2{font-size:20px;margin:0}
+  .plan-header .meta{display:flex;flex-direction:row;gap:10px;flex-wrap:wrap}
+  .meta-item{font-size:13px;color:#475569}
+
+  /* Progress */
+  .progress-bar{height:8px;border-radius:8px}
+
+  /* Actions: stack and full width */
+  .plan-header .actions{display:flex;flex-direction:column;gap:10px;width:100%}
+  .plan-header .actions .btn{width:100%;padding:12px;border-radius:10px;font-weight:700}
+  .plan-header .actions .btn.mark-complete, .plan-header .actions .btn:first-child{background:#10b981;color:#fff}
+  .plan-header .actions .btn.delete, .plan-header .actions .btn:last-child{background:#ef4444;color:#fff}
+
+  /* Tabs */
+  .tabs{margin-top:6px}
+  .tabs .tab{padding:10px 12px;font-size:15px}
+
+  /* Applications header: stats + Log button */
+  .applications-header{display:flex;flex-direction:column;gap:8px;padding:10px 8px}
+  .applications-overview .stats{display:flex;flex-direction:row;gap:12px;flex-wrap:wrap}
+  .applications-overview .stats .stat{display:flex;flex-direction:column;align-items:flex-start;min-width:72px}
+  .applications-overview .stats .stat .count{font-size:16px}
+  .applications-overview .stats .stat .label{font-size:13px}
+
+  /* Log button full width below stats */
+  .log-application-container{width:100%}
+  .log-application-container .log-application-btn{width:100%;padding:12px;border-radius:12px}
+
+  /* Application card styling */
+  .applications-list .app-card{margin:12px 0;padding:14px;border-radius:12px}
+  .app-card h4{font-size:16px;margin:0 0 6px}
+  .app-card .app-meta{gap:6px}
+  .app-card .applied-date{font-size:13px;color:#64748b}
+  .status-badges{margin-top:8px}
+  .status-badges .status-btn{padding:6px 8px;font-size:13px}
+  .app-card .delete-btn{margin-top:8px;align-self:flex-end}
+
+  /* Compact outer spacing to match screenshot feel */
+  .main{padding:10px}
+  .panel{padding:10px}
+}
+
+
+
+
